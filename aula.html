@@ -85,7 +85,7 @@
 
     <script>
     // ==================== CONFIGURACIÓN ====================
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyGAiJIdZgOaDrxEvPm7gfqVvEZT1mLxG45pQwDpaOKKbQtqLtV-ZsrAVIAGSrExVEDsw/exec";  
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz7VGz2p95cMVUJDTJoH44eeJYmbd0Bcfgx2eHIQ9cL_AkV_Dgtv-9dkTQdAUdo9_V3vw/exec";  
     // ← Pega aquí tu URL real del Apps Script (la que termina en /exec)
 
 // ==================== LOGIN ====================
@@ -107,7 +107,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             method: 'POST',
             mode: 'cors',
             headers: {
-                'Content-Type': 'text/plain;charset=utf-8'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
                 usuario: usuario, 
