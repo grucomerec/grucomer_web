@@ -16,46 +16,61 @@
     <button onclick="logout()" class="btn btn-outline-danger">Cerrar Sesión</button>
   </div>
 
-  <!-- Curso A -->
-  <section id="cursoA" style="display:none">
-    <h3 class="mb-4">Materiales Curso A</h3>
+  <!-- Curso 1A -->
+  <section id="1A" style="display:none">
+    <h3 class="mb-4">Materiales Curso 1A</h3>
     <div class="row">
       <div class="col-md-6 col-lg-4 mb-4">
         <div class="card week-card h-100">
           <div class="card-header bg-success text-white">Semana 1</div>
           <div class="card-body">
-            <a href="ENLACE_DRIVE_CURSO_A_SEMANA1" target="_blank" class="btn btn-primary w-100">Acceder</a>
+            <a href="ENLACE_DRIVE_1A_SEMANA1" target="_blank" class="btn btn-primary w-100">Acceder</a>
           </div>
         </div>
       </div>
-      <!-- Repite para Semana 2, 3, etc. -->
+      <!-- Repite para Semana 2, 3, 4 -->
     </div>
   </section>
 
-  <!-- Curso B -->
-  <section id="cursoB" style="display:none">
-    <h3 class="mb-4">Materiales Curso B</h3>
+  <!-- Curso 2B -->
+  <section id="2B" style="display:none">
+    <h3 class="mb-4">Materiales Curso 2B</h3>
     <div class="row">
       <div class="col-md-6 col-lg-4 mb-4">
         <div class="card week-card h-100">
           <div class="card-header bg-info text-white">Semana 1</div>
           <div class="card-body">
-            <a href="ENLACE_DRIVE_CURSO_B_SEMANA1" target="_blank" class="btn btn-primary w-100">Acceder</a>
+            <a href="ENLACE_DRIVE_2B_SEMANA1" target="_blank" class="btn btn-primary w-100">Acceder</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Curso C -->
-  <section id="cursoC" style="display:none">
-    <h3 class="mb-4">Materiales Curso C</h3>
+  <!-- Curso 3B -->
+  <section id="3B" style="display:none">
+    <h3 class="mb-4">Materiales Curso 3B</h3>
     <div class="row">
       <div class="col-md-6 col-lg-4 mb-4">
         <div class="card week-card h-100">
           <div class="card-header bg-warning text-dark">Semana 1</div>
           <div class="card-body">
-            <a href="ENLACE_DRIVE_CURSO_C_SEMANA1" target="_blank" class="btn btn-primary w-100">Acceder</a>
+            <a href="ENLACE_DRIVE_3B_SEMANA1" target="_blank" class="btn btn-primary w-100">Acceder</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Curso 4B -->
+  <section id="4B" style="display:none">
+    <h3 class="mb-4">Materiales Curso 4B</h3>
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card week-card h-100">
+          <div class="card-header bg-danger text-white">Semana 1</div>
+          <div class="card-body">
+            <a href="ENLACE_DRIVE_4B_SEMANA1" target="_blank" class="btn btn-primary w-100">Acceder</a>
           </div>
         </div>
       </div>
@@ -63,27 +78,23 @@
   </section>
 
   <script>
-    // Recuperar datos del login
     const nombre = localStorage.getItem("nombreEstudiante");
-    const curso = localStorage.getItem("cursoEstudiante");
+    const cursos = localStorage.getItem("cursoEstudiante");
 
-    if (!nombre || !curso) {
-      // Si no hay datos, redirigir al login
+    if (!nombre || !cursos) {
       window.location.href = "aula.html";
     }
 
     document.getElementById("nombreEstudiante").textContent = nombre;
 
-    // Mostrar solo el curso correspondiente
-    if (curso === "Curso A") {
-      document.getElementById("cursoA").style.display = "block";
-    } else if (curso === "Curso B") {
-      document.getElementById("cursoB").style.display = "block";
-    } else if (curso === "Curso C") {
-      document.getElementById("cursoC").style.display = "block";
-    }
+    const listaCursos = cursos.split(",").map(c => c.trim());
+    listaCursos.forEach(cursoId => {
+      const section = document.getElementById(cursoId);
+      if (section) {
+        section.style.display = "block";
+      }
+    });
 
-    // Función de logout
     function logout() {
       localStorage.clear();
       window.location.href = "aula.html";
