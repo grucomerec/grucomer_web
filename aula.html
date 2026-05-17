@@ -79,19 +79,15 @@
         </div>
     </section>
 
-    <footer class="bg-dark text-white text-center py-3">
-        <p>&copy; 2026 Grucomer Ec - Todos los derechos reservados</p>
-    </footer>
-
     <script>
     // ==================== CONFIGURACIÓN ====================
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLVRtx8g8gZII4VCiwMpvhi878coxGiBJXHAaeW4ZMcJG5OD-9IUKe4MYu0Bqw2oLkLQ/exec";  
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxatTPw8uFhjrKbK3AbZ8qnXLbOA0sNcLcw6u7YzI479lQeewfx5iXT3o5obqFDBKv_KA/exec";  
     // ← Pega aquí tu URL real del Apps Script (la que termina en /exec)
 
 // ==================== LOGIN ====================
 document.getElementById('loginForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    
+
     const usuario = document.getElementById('usuario').value.trim();
     const clave = document.getElementById('clave').value.trim();
     const errorMsg = document.getElementById('errorMsg');
@@ -103,19 +99,9 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     }
 
     try {
-        const response = await fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ 
-                usuario: usuario, 
-                clave: clave,
-                apiKey: "grucomer/mayo/2026@andaruti_1999"  // debe coincidir con el backend
-            })
-        });
-
+        const url = `${SCRIPT_URL}?usuario=${encodeURIComponent(usuario)}&clave=${encodeURIComponent(clave)}&apiKey=${encodeURIComponent("grucomer/mayo/2026@andaruti_1999")}`;
+        
+        const response = await fetch(url);
         const data = await response.json();
 
         if (data.success === true) {
@@ -140,6 +126,10 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 });
 
 </script>
+
+<footer class="bg-dark text-white text-center py-3">
+    <p>&copy; 2026 Grucomer Ec - Todos los derechos reservados</p>
+</footer>
 
 </body>
 </html>
