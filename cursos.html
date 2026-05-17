@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>🎓 Aula Virtual - Cursos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .week-card { transition: all 0.3s; }
+    .week-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+  </style>
+</head>
+<body class="container my-5">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Bienvenido, <span id="nombreEstudiante" class="text-primary"></span></h2>
+    <button onclick="logout()" class="btn btn-outline-danger">Cerrar Sesión</button>
+  </div>
+
+  <!-- Curso A -->
+  <section id="cursoA" style="display:none">
+    <h3 class="mb-4">Materiales Curso A</h3>
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card week-card h-100">
+          <div class="card-header bg-success text-white">Semana 1</div>
+          <div class="card-body">
+            <a href="ENLACE_DRIVE_CURSO_A_SEMANA1" target="_blank" class="btn btn-primary w-100">Acceder</a>
+          </div>
+        </div>
+      </div>
+      <!-- Repite para Semana 2, 3, etc. -->
+    </div>
+  </section>
+
+  <!-- Curso B -->
+  <section id="cursoB" style="display:none">
+    <h3 class="mb-4">Materiales Curso B</h3>
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card week-card h-100">
+          <div class="card-header bg-info text-white">Semana 1</div>
+          <div class="card-body">
+            <a href="ENLACE_DRIVE_CURSO_B_SEMANA1" target="_blank" class="btn btn-primary w-100">Acceder</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Curso C -->
+  <section id="cursoC" style="display:none">
+    <h3 class="mb-4">Materiales Curso C</h3>
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card week-card h-100">
+          <div class="card-header bg-warning text-dark">Semana 1</div>
+          <div class="card-body">
+            <a href="ENLACE_DRIVE_CURSO_C_SEMANA1" target="_blank" class="btn btn-primary w-100">Acceder</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Recuperar datos del login
+    const nombre = localStorage.getItem("nombreEstudiante");
+    const curso = localStorage.getItem("cursoEstudiante");
+
+    if (!nombre || !curso) {
+      // Si no hay datos, redirigir al login
+      window.location.href = "aula.html";
+    }
+
+    document.getElementById("nombreEstudiante").textContent = nombre;
+
+    // Mostrar solo el curso correspondiente
+    if (curso === "Curso A") {
+      document.getElementById("cursoA").style.display = "block";
+    } else if (curso === "Curso B") {
+      document.getElementById("cursoB").style.display = "block";
+    } else if (curso === "Curso C") {
+      document.getElementById("cursoC").style.display = "block";
+    }
+
+    // Función de logout
+    function logout() {
+      localStorage.clear();
+      window.location.href = "aula.html";
+    }
+  </script>
+
+</body>
+</html>
