@@ -81,10 +81,12 @@
 
     <script>
     // ==================== CONFIGURACIÓN ====================
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxKrUAei3BlvL3LomPh65PhcodSNUvzPa4idPQyRyEMcnCYwlApBQWSFuUU3g_fB3eT3Q/exec";  
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxuGuFtmOyFRstKdQPVlgV_0SFCgqjZb6gsOOXpIhVBAIUHXb34tp8eE2-zUQ5C8Z1RAQ/exec";  
     // ← Pega aquí tu URL real del Apps Script (la que termina en /exec)
 
 // ==================== LOGIN ====================
+
+const ALLOWED_ORIGIN = window.location.origin; // tu dominio real (ej. https://TUUSUARIO.github.io)
 
 document.getElementById('loginForm').addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -100,7 +102,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     }
 
     try {
-        const url = `${SCRIPT_URL}?usuario=${encodeURIComponent(usuario)}&clave=${encodeURIComponent(clave)}&apiKey=${encodeURIComponent("grucomer/mayo/2026@andaruti_1999")}`;
+        const url = `${SCRIPT_URL}?usuario=${encodeURIComponent(usuario)}&clave=${encodeURIComponent(clave)}&apiKey=${encodeURIComponent("grucomer/mayo/2026@andaruti_1999")}&origin=${encodeURIComponent(ALLOWED_ORIGIN)}`;
         
         const response = await fetch(url);
         const data = await response.json();
@@ -112,7 +114,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         } else {
             errorMsg.textContent = data.motivo === "negado" 
                 ? "Acceso denegado por el administrador" 
-                : "Usuario o contraseña incorrectos";
+                : (data.error || "Usuario o contraseña incorrectos");
             errorMsg.style.display = 'block';
             setTimeout(() => { errorMsg.style.display = 'none'; }, 4000);
         }
