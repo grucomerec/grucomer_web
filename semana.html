@@ -17,9 +17,9 @@
 
     console.log("Parámetros recibidos en frontend:", { curso, semana });
 
-    const DASHBOARD_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwBL0mc_05atHKNUsU-vnoYK9OdqY1rybn4XvfTffGbkXq7oWWIrU4tG4Mbqfm-tphDtQ/exec";
+    const DASHBOARD_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw8Nym4Udeh60w4ab8wgmdd7a078QngCHthqZsw30IioKwfbYM4Xg0PFC5c3hrLP3BdXg/exec";
 
-    fetch(`${DASHBOARD_SCRIPT_URL}?action=getLinks&curso=${curso}&semana=${semana}&apiKey=${encodeURIComponent("grucomer/dashboard/2026")}&origin=${encodeURIComponent(window.location.origin)}`)
+    fetch(`${DASHBOARD_SCRIPT_URL}?action=getLinks&curso=${curso}&semana=${semana}&apiKey=${encodeURIComponent("grucomer/mayo/2026@andaruti_1999")}&origin=${encodeURIComponent(window.location.origin)}`)
       .then(res => res.json())
       .then(data => {
         console.log("Respuesta del backend:", data);
