@@ -81,7 +81,7 @@
 
     <script>
     // ==================== CONFIGURACIÓN ====================
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzl9eC60vmo-6mW0HfMcQaiZMk2xqRu_UJwXn9BT8wUYi43tLzXe0wRq6QlzVOm9mstfQ/exec";  
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzAz-m_P3xMTc4sptLfcHUFvNyKcxxV3bSWCmdngOq2KmNe_5b4XOcHcbobp1_YWbaeQg/exec";  
     // ← Pega aquí tu URL real del Apps Script (la que termina en /exec)
 
 // ==================== LOGIN ====================
@@ -89,7 +89,7 @@
 document.getElementById('loginForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const usuario = document.getElementById('usuario').value.trim();
+    const usuario = document.getElementById('usuario').value.trim().toLowerCase();
     const clave = document.getElementById('clave').value.trim();
     const errorMsg = document.getElementById('errorMsg');
 
@@ -108,7 +108,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         if (data.success === true) {
             document.getElementById('loginSection').style.display = 'none';
             document.getElementById('aulaContent').style.display = 'block';
-            document.getElementById('nombreEstudiante').textContent = data.nombre;
+            document.getElementById('nombreEstudiante').textContent = `Bienvenido ${data.nombre} al curso ${data.curso}`;
         } else {
             errorMsg.textContent = data.motivo === "negado" 
                 ? "Acceso denegado por el administrador" 
