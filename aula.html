@@ -81,7 +81,7 @@
 
     <script>
     // ==================== CONFIGURACIÓN ====================
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxatTPw8uFhjrKbK3AbZ8qnXLbOA0sNcLcw6u7YzI479lQeewfx5iXT3o5obqFDBKv_KA/exec";  
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwm2-TNmUDUn3uvVoaz1WBHgqgp2CqOfOeLKGI7pLxkJeTO9ALE5N1lE0UgfEs4K-FY4g/exec";  
     // ← Pega aquí tu URL real del Apps Script (la que termina en /exec)
 
 // ==================== LOGIN ====================
@@ -109,11 +109,9 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             document.getElementById('aulaContent').style.display = 'block';
             document.getElementById('nombreEstudiante').textContent = data.nombre;
         } else {
-            if (data.motivo === "negado") {
-                errorMsg.textContent = "Acceso denegado por el administrador";
-            } else {
-                errorMsg.textContent = "Usuario o contraseña incorrectos";
-            }
+            errorMsg.textContent = data.motivo === "negado" 
+                ? "Acceso denegado por el administrador" 
+                : "Usuario o contraseña incorrectos";
             errorMsg.style.display = 'block';
             setTimeout(() => { errorMsg.style.display = 'none'; }, 4000);
         }
@@ -124,6 +122,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         setTimeout(() => { errorMsg.style.display = 'none'; }, 5000);
     }
 });
+
 
 </script>
 
