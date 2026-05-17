@@ -57,28 +57,6 @@
         </div>
     </section>
 
-    <!-- Aula Virtual -->
-    <section id="aulaContent" class="aula-content container my-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Bienvenido, <span id="nombreEstudiante" class="text-primary"></span></h2>
-            <button onclick="logout()" class="btn btn-outline-danger">Cerrar Sesión</button>
-        </div>
-
-        <h3 class="mb-4">Materiales por Semana</h3>
-
-        <div class="row">
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card week-card h-100">
-                    <div class="card-header bg-success text-white">Semana 1</div>
-                    <div class="card-body">
-                        <a href="TU_ENLACE_DRIVE_SEMANA1" target="_blank" class="btn btn-primary w-100">Acceder a materiales</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Repite para Semana 2, 3 y 4 -->
-        </div>
-    </section>
-
     <script>
     // ==================== CONFIGURACIÓN ====================
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-4FX8t1nnSWPVtwZ_ALcGqfaVNtSLXYY-XrGiTm-JAPE5mZaduwRbTaaNY5bmG1qHyQ/exec";  
@@ -108,9 +86,12 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         const data = await response.json();
 
         if (data.success === true) {
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('aulaContent').style.display = 'block';
-            document.getElementById('nombreEstudiante').textContent = `Bienvenido ${data.nombre} al curso ${data.curso}`;
+    // Guardamos datos en localStorage para usarlos en cursos.html
+    localStorage.setItem("nombreEstudiante", data.nombre);
+    localStorage.setItem("cursoEstudiante", data.curso);
+
+    // Redirigir a cursos.html
+    window.location.href = "cursos.html";
         } else {
             errorMsg.textContent = data.motivo === "negado" 
                 ? "Acceso denegado por el administrador" 
