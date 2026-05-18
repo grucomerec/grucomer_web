@@ -17,6 +17,12 @@
 
     const DASHBOARD_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwmSr1uaNQFvuwRmk0q4UBDF5HBnbBcL_j151rxmrvNo8USYlk4glZPYsmNXYBz3ceWrQ/exec";
 
+    if (!curso || !semana) {
+      document.getElementById("linksContainer").innerHTML = 
+        "<p class='text-danger'>Faltan parámetros en la URL.</p>";
+      throw new Error("Parámetros curso/semana faltantes");
+    }
+
     fetch(`${DASHBOARD_SCRIPT_URL}?action=getLinks&curso=${curso}&semana=${semana}`)
       .then(res => res.json())
       .then(data => {
@@ -24,6 +30,7 @@
           document.getElementById("tituloSemana").textContent = 
             `Materiales ${data.curso} - Semana ${data.semana}`;
           const container = document.getElementById("linksContainer");
+          container.innerHTML = "";
 
           if (data.links.length > 0) {
             data.links.forEach(linkObj => {
@@ -34,8 +41,18 @@
               card.className = "card h-100";
 
               const header = document.createElement("div");
-              header.className = "card-header bg-info text-white";
-              header.textContent = linkObj.nombre;
+              header.className = "card-header text-white";
+
+              // Colores según semana
+              switch (data.semana) {
+                case "1": header.classList.add("bg-success"); break; // verde
+                case "2": header.classList.add("bg-primary"); break; // azul
+                case "3": header.classList.add("bg-warning"); header.classList.remove("text-white"); break; // amarillo
+                case "4": header.classList.add("bg-danger"); break; // rojo
+                default: header.classList.add("bg-info");
+              }
+
+              header.textContent = linkObj.nombre || "Recurso";
 
               const body = document.createElement("div");
               body.className = "card-body";
@@ -43,7 +60,7 @@
               const a = document.createElement("a");
               a.href = linkObj.url;
               a.target = "_blank";
-              a.className = "btn btn-primary w-100";
+              a.className = "btn btn-outline-dark w-100";
               a.textContent = "Acceder";
 
               body.appendChild(a);
