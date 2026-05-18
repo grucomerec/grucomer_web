@@ -7,61 +7,61 @@
 </head>
 <body class="container my-5">
 
-  <h2 id="tituloSemana"></h2>
-  <div id="linksContainer" class="mt-4"></div>
+  <h2 id="tituloSemana" class="mb-4"></h2>
+  <div id="linksContainer" class="row"></div>
 
   <script>
-    // Obtener parámetros de la URL
     const params = new URLSearchParams(window.location.search);
-    const cursoId = params.get("cursoId");
+    const curso = params.get("curso");
     const semana = params.get("semana");
 
-    document.getElementById("tituloSemana").textContent = 
-      `Materiales Curso ${cursoId} - Semana ${semana}`;
+    const DASHBOARD_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbygEjVSMiwl63eu1ToOG1YD6PeiXx0SC5XHBDC-mGUJDsk0TzEuw4WVNzbQUpP8xkw0Rw/exec";
 
-    // URL del Web App de Apps Script
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxNF60EBEZYpreXeuzJG3Y2VfzTBEtsDcuiwEfr4lhxAfKkuxvDziU-bgDXtYJ53UOMhg/exec";
-
-    // Token secreto y dominio permitido
-    const TOKEN = "grucomer2026//planificacion//segura//2026";
-    const ORIGIN = window.location.origin;
-
-    // Llamada al backend
-    fetch(`${SCRIPT_URL}?cursoId=${cursoId}&semana=${semana}&token=${TOKEN}&origin=${encodeURIComponent(ORIGIN)}`)
+    fetch(`${DASHBOARD_SCRIPT_URL}?action=getLinks&curso=${curso}&semana=${semana}`)
       .then(res => res.json())
       .then(data => {
-        const container = document.getElementById("linksContainer");
-        if (data.success && data.data.length > 0) {
-          data.data.forEach(item => {
-            const card = document.createElement("div");
-            card.className = "card mb-3";
+        if (data.success) {
+          document.getElementById("tituloSemana").textContent = 
+            `Materiales ${data.curso} - Semana ${data.semana}`;
+          const container = document.getElementById("linksContainer");
 
-            const body = document.createElement("div");
-            body.className = "card-body";
+          if (data.links.length > 0) {
+            data.links.forEach(linkObj => {
+              const col = document.createElement("div");
+              col.className = "col-md-6 col-lg-4 mb-4";
 
-            const title = document.createElement("h5");
-            title.className = "card-title";
-            title.textContent = item.descripcion;
+              const card = document.createElement("div");
+              card.className = "card h-100";
 
-            const linkBtn = document.createElement("a");
-            linkBtn.href = item.link;
-            linkBtn.target = "_blank";
-            linkBtn.className = "btn btn-outline-primary mt-2";
-            linkBtn.textContent = "Acceder al recurso";
+              const header = document.createElement("div");
+              header.className = "card-header bg-info text-white";
+              header.textContent = linkObj.nombre;
 
-            body.appendChild(title);
-            body.appendChild(linkBtn);
-            card.appendChild(body);
-            container.appendChild(card);
-          });
+              const body = document.createElement("div");
+              body.className = "card-body";
+
+              const a = document.createElement("a");
+              a.href = linkObj.url;
+              a.target = "_blank";
+              a.className = "btn btn-primary w-100";
+              a.textContent = "Acceder";
+
+              body.appendChild(a);
+              card.appendChild(header);
+              card.appendChild(body);
+              col.appendChild(card);
+              container.appendChild(col);
+            });
+          } else {
+            container.innerHTML = "<p class='text-danger'>No hay materiales disponibles.</p>";
+          }
         } else {
-          container.innerHTML = "<p class='text-danger'>No hay materiales disponibles.</p>";
+          document.getElementById("linksContainer").innerHTML = "<p class='text-danger'>Error al cargar materiales.</p>";
         }
       })
       .catch(err => {
         console.error(err);
-        document.getElementById("linksContainer").innerHTML = 
-          "<p class='text-danger'>Error al cargar materiales.</p>";
+        document.getElementById("linksContainer").innerHTML = "<p class='text-danger'>Error al cargar materiales.</p>";
       });
   </script>
 
