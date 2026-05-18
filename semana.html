@@ -15,7 +15,7 @@
     const curso = params.get("curso");
     const semana = params.get("semana");
 
-    const DASHBOARD_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbygEjVSMiwl63eu1ToOG1YD6PeiXx0SC5XHBDC-mGUJDsk0TzEuw4WVNzbQUpP8xkw0Rw/exec";
+    const DASHBOARD_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwmSr1uaNQFvuwRmk0q4UBDF5HBnbBcL_j151rxmrvNo8USYlk4glZPYsmNXYBz3ceWrQ/exec";
 
     fetch(`${DASHBOARD_SCRIPT_URL}?action=getLinks&curso=${curso}&semana=${semana}`)
       .then(res => res.json())
