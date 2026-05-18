@@ -8,6 +8,14 @@
 <body class="container my-5">
 
   <h2 id="tituloSemana" class="mb-4"></h2>
+
+  <!-- Loader -->
+  <div id="loading" class="d-flex justify-content-center my-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+
   <div id="linksContainer" class="row"></div>
 
   <script>
@@ -15,17 +23,22 @@
     const curso = params.get("curso");
     const semana = params.get("semana");
 
-    const DASHBOARD_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwmSr1uaNQFvuwRmk0q4UBDF5HBnbBcL_j151rxmrvNo8USYlk4glZPYsmNXYBz3ceWrQ/exec";
+    const DASHBOARD_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwiPOeg4uehzKq2VkaMlCsOUxZNpV_TkbePVmUF74GB6m87MrwWYpbZgX59Evt6rpelGQ/exec";
+    const API_KEY = "endpoint//planificacion//2026//grucomer//"; // mismo que en Apps Script
+    const ORIGIN = "https://grucomerec.github.io";
 
     if (!curso || !semana) {
+      document.getElementById("loading").style.display = "none";
       document.getElementById("linksContainer").innerHTML = 
         "<p class='text-danger'>Faltan parámetros en la URL.</p>";
       throw new Error("Parámetros curso/semana faltantes");
     }
 
-    fetch(`${DASHBOARD_SCRIPT_URL}?action=getLinks&curso=${curso}&semana=${semana}`)
+    fetch(`${DASHBOARD_SCRIPT_URL}?action=getLinks&curso=${curso}&semana=${semana}&origin=${ORIGIN}&key=${API_KEY}`)
       .then(res => res.json())
       .then(data => {
+        document.getElementById("loading").style.display = "none"; // ocultar loader
+
         if (data.success) {
           document.getElementById("tituloSemana").textContent = 
             `Materiales ${data.curso} - Semana ${data.semana}`;
@@ -45,10 +58,10 @@
 
               // Colores según semana
               switch (data.semana) {
-                case "1": header.classList.add("bg-success"); break; // verde
-                case "2": header.classList.add("bg-primary"); break; // azul
-                case "3": header.classList.add("bg-warning"); header.classList.remove("text-white"); break; // amarillo
-                case "4": header.classList.add("bg-danger"); break; // rojo
+                case "1": header.classList.add("bg-success"); break;
+                case "2": header.classList.add("bg-primary"); break;
+                case "3": header.classList.add("bg-warning"); header.classList.remove("text-white"); break;
+                case "4": header.classList.add("bg-danger"); break;
                 default: header.classList.add("bg-info");
               }
 
@@ -77,6 +90,7 @@
         }
       })
       .catch(err => {
+        document.getElementById("loading").style.display = "none";
         console.error(err);
         document.getElementById("linksContainer").innerHTML = "<p class='text-danger'>Error al cargar materiales.</p>";
       });
