@@ -20,11 +20,11 @@
 
   <script>
     const params = new URLSearchParams(window.location.search);
-    const curso = params.get("curso");
-    const semana = params.get("semana");
+    const curso = params.get("curso");   // ID del curso (ej: 1A)
+    const semana = params.get("semana"); // Número de semana
 
-    const DASHBOARD_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwiPOeg4uehzKq2VkaMlCsOUxZNpV_TkbePVmUF74GB6m87MrwWYpbZgX59Evt6rpelGQ/exec";
-    const API_KEY = "endpoint//planificacion//2026//grucomer//"; // mismo que en Apps Script
+    const DASHBOARD_SCRIPT_URL = "TU_URL_DEL_SCRIPT/exec";
+    const API_KEY = "MI_API_KEY_SECRETO"; // mismo que en Apps Script
     const ORIGIN = "https://grucomerec.github.io";
 
     if (!curso || !semana) {
@@ -40,8 +40,10 @@
         document.getElementById("loading").style.display = "none"; // ocultar loader
 
         if (data.success) {
+          // Mostrar ID + Nombre del curso
           document.getElementById("tituloSemana").textContent = 
-            `Materiales ${data.curso} - Semana ${data.semana}`;
+            `Materiales ${curso} – ${data.curso} – Semana ${data.semana}`;
+
           const container = document.getElementById("linksContainer");
           container.innerHTML = "";
 
